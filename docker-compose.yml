@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: car_rental_app
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/car-rental
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+    depends_on:
+      - db
+    networks:
+      - car-rental
+
+  db:
+    container_name: car_rental_db
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: car-rental
+    networks:
+      - car-rental
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  car-rental:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+

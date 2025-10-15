@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: car-rental
+  datasource:
+    url: jdbc:postgresql://localhost:5432/car-rental
+    username: postgres
+    password: password
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
